@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Intervals On Fretboard</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">></script>
+</head>
+<body>
+  <div align="center">
+<h2>Intervals On Fretboard</h2>
+<p id="song-name"></p>
+<audio id="song-note" controls>
+    <p>Audio not supported.</p>
+</audio></div>
+</body>
+
+<script type="text/javascript">
+            var PAUSE_IN_SECONDS = 5;
+            function playRandomSong() {
+                var songs = [
+                    '1.mp3',
+                    '2.mp3',
+                    '3.mp3',
+                    '4.mp3',
+                    '5.mp3',
+                    '6.mp3',
+                    '7.mp3'
+                ];
+                // Pick a random song.
+                var songIndex = Math.floor(Math.random() * songs.length);
+                $('#song-name').text('Playing ' + songs[songIndex]);
+                $('#song-note-source').prop('src', songs[songIndex]);
+                // Grab the actual <audio> element from the jQuery object.
+                var audio = $('#song-note')[0];
+                // Just in case.
+                audio.pause();
+                // Load the audio into the buffer.
+                audio.load();
+                // Start the song.
+                audio.play();
+            }
+            // This little $(function() { ... }) tells jQuery to run
+            // this function when the page loads.
+            $(function() {
+                var source = document.createElement('source');
+                source.id = 'song-note-source';
+                $('#song-note').append(source);
+                playRandomSong();
+                $('#song-note').on('ended', function() {
+                    setTimeout(function() {
+                        playRandomSong();
+                    }, 0 * PAUSE_IN_SECONDS);
+                });
+            });
+</script>
+</html>
